@@ -1,0 +1,36 @@
+#!/bin/sh
+
+PORT=$((RANDOM % 30720 + 2048))
+PASSWORD=$(openssl rand -hex 8)
+if [ -z "$WEBPATH" ]
+then
+	WEBPATH=/usr/local/share/tc-webinst
+fi
+
+interrupted()
+{
+	echo -e "\rSIGINT received. Type $(realpath $0) to rerun."
+}
+
+trap interrupted SIGINT
+
+_ipaddrs=/tmp/ipaddrs
+
+echo "/:install:$(httpd -m $PASSWORD)" > /tmp/install-httpd.conf
+
+echo Log into the installer at one of the URLs below:
+echo
+
+ip addr | grep -oE 'inet ((2[0-5][0-9]|1[0-9]{2}|[0-9]{2}|[0-9]).){3}(2[0-5][0-9]|1[0-9]{2}|[0-9]{2}|[0-9])' | grep -vF '127.0.0.1' | sed 's/inet //g' > $_ipaddrs
+while read ip
+do
+	echo "      http://$ip:$PORT/"
+done < $_ipaddrs
+
+echo
+echo ... and use the following credentials:
+echo
+echo "      Username: install"
+echo "      Password: $PASSWORD"
+
+httpd -h $WEBPATH -v -f -p $PORT -r "Use the details from the terminal" -c /tmp/install-httpd.conf
