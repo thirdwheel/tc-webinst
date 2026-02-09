@@ -20,31 +20,37 @@ let Installer={
             {
                 document.getElementById('stage1').style.display='none';
                 document.getElementById('stage2' + checked.value).style.display='block';
+
+                switch (checked)
+                {
+                    case 'C':
+                        let ajax = new XMLHttpRequest();
+                        ajax.open('GET', '/cgi-bin/find-cdrom.sh');
+                        ajax.onloadend=function()
+                        {
+                            let cdroms=document.querySelector('#stage2C .cdroms');
+                            for (let i = 0; i < this.response.cds.length; i++)
+                            {
+                                let cd=this.response.cds[i];
+                                let label = document.createElement('label');
+                                let input = label.appendChild(document.createElement('input'));
+                                input.type='radio';
+                                input.name='cdrom';
+                                input.value=cd;
+                                label.appendChild(document.createTextNode(' ' + cd));
+                                cdroms.appendChild(label);
+                            }
+                        }
+                        ajax.send();
+
+                        break;
+                }
             }
         },
         stage2R()
         {},
         stage2C()
-        {
-            let ajax = new XMLHttpRequest();
-            ajax.open('GET', '/cgi-bin/find-cdrom.sh');
-            ajax.onloadend=function()
-            {
-                let cdroms=document.querySelector('#stage2C .cdroms');
-                for (let i = 0; i < this.response.cds.length; i++)
-                {
-                    let cd=this.response.cds[i];
-                    let label = document.createElement('label');
-                    let input = label.appendChild(document.createElement('input'));
-                    input.type='radio';
-                    input.name='cdrom';
-                    input.value=cd;
-                    label.appendChild(document.createTextNode(' ' + cd));
-                    cdroms.appendChild(label);
-                }
-            }
-            ajax.send();
-        },
+        {},
         stage2I()
         {},
         stage2N()
