@@ -21,7 +21,7 @@ let Installer={
                 document.getElementById('stage1').style.display='none';
                 document.getElementById('stage2' + checked.value).style.display='block';
 
-                switch (checked)
+                switch (checked.value)
                 {
                     case 'C':
                         let ajax = new XMLHttpRequest();
