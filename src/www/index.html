@@ -12,20 +12,40 @@
 
 </head>
 <body>
-
-<div id="main">
-    <h1><!-- logo is set in tiny.css //--></h1>
-    <div id="content">
-        <h3>Welcome to The Core Project - Tiny Core Linux</h3>
-        <div id="stage1">
-            <p>What are you planning to install from?</p>
-            <label><input type="radio" name="instfrom" value="R"> Running OS</label>
-            <label><input type="radio" name="instfrom" value="C"> Booted CD-ROM</label>
-            <label><input type="radio" name="instfrom" value="I"> ISO File</label>
-            <label><input type="radio" name="instfrom" value="N"> The 'Net</label>
-            <button>Next</button>
+    <div id="main">
+        <h1><!-- logo is set in tiny.css //--></h1>
+        <div id="content">
+            <h3>Welcome to The Core Project - Tiny Core Linux</h3>
+            <div id="stage1">
+                <p>What are you planning to install from?</p>
+                <label><input type="radio" name="instfrom" value="R"> Running OS</label>
+                <label><input type="radio" name="instfrom" value="C"> Booted CD-ROM</label>
+                <label><input type="radio" name="instfrom" value="I"> ISO File</label>
+                <label><input type="radio" name="instfrom" value="N"> The 'Net</label>
+                <button class="btn-next">Next</button>
+            </div>
+            <div id="stage2R" style="display: none">
+                <label for="BOOT">Enter the boot directory path to vmlinuz/vmlinuz64 and core.gz/corepure64.gz</label><br />
+                <input name="BOOT" id="BOOT" value="" placeholder="/mnt/sda1/tce/boot">
+                <button class="btn-prev">Prev</button>
+                <button class="btn-next">Next</button>
+            </div>
+            <div id="stage2C" style="display: none">
+                <span class="cdroms"></span>
+                <button class="btn-prev">Prev</button>
+                <button class="btn-next">Next</button>
+            </div>
+            <div id="stage2I" style="display: none">
+                <button class="btn-prev">Prev</button>
+                <button class="btn-next">Next</button>
+            </div>
+            <div id="stage2N" style="display: none">
+                <button class="btn-prev">Prev</button>
+                <button class="btn-next">Next</button>
+            </div>
         </div>
     </div>
-</div>
+
+    <script src="index.js" type="text/javascript"></script>
 </body>
 </html>
