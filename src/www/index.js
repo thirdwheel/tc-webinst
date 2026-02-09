@@ -26,6 +26,7 @@ let Installer={
                     case 'C':
                         let ajax = new XMLHttpRequest();
                         ajax.open('GET', '/cgi-bin/find-cdrom.sh');
+                        ajax.responseType='json';
                         ajax.onloadend=function()
                         {
                             let cdroms=document.querySelector('#stage2C .cdroms');
