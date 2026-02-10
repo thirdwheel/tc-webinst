@@ -20,16 +20,30 @@ let Installer={
             {
                 document.getElementById('stage1').style.display='none';
                 document.getElementById('stage2' + checked.value).style.display='block';
+                let ajax = Installer.snippets.ajax();
 
                 switch (checked.value)
                 {
                     case 'C':
-                        let ajax = new XMLHttpRequest();
+                        document.querySelector('#stage2C .cdroms').innerHTML='Loading CDs...';
                         ajax.open('GET', '/cgi-bin/find-cdrom.sh');
-                        ajax.responseType='json';
                         ajax.onloadend=function()
                         {
                             let cdroms=document.querySelector('#stage2C .cdroms');
+                            cdroms.innerHTML='';
+
+                            if (this.response.error !== undefined)
+                            {
+                                switch (this.response.error)
+                                {
+                                    case 1:
+                                        cdroms.innerHTML='Could not find valid CDs: ' + this.response.detail;
+                                        break;
+                                    case 2:
+                                        cdroms.innerHTML='Could not find valid CDs!';
+                                }
+                                return;
+                            }
                             for (let i = 0; i < this.response.cds.length; i++)
                             {
                                 let cd=this.response.cds[i];
