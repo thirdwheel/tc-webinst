@@ -35,6 +35,8 @@ let Installer={
                             }
                             arch.style.display='inherit';
                         }
+                        ajax.send(null);
+                        break;
                     case 'C':
                         document.querySelector('#stage2C .cdroms').innerHTML='Loading CDs...';
                         ajax.open('GET', '/cgi-bin/find-cdrom.sh');
