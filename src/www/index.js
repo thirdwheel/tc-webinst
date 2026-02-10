@@ -78,6 +78,14 @@ let Installer={
             document.getElementById('stage2N').style.display='none';
             document.getElementById('stage1').style.display='block';
         },
+    },
+    snippets: {
+        ajax()
+        {
+            let x = new XMLHttpRequest();
+            x.responseType='json';
+            return x;
+        }
     }
 }
 
