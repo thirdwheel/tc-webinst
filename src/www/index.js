@@ -24,6 +24,17 @@ let Installer={
 
                 switch (checked.value)
                 {
+                    case 'N':
+                        ajax.open('GET', '/cgi-bin/getarch.sh');
+                        ajax.onloadend=function()
+                        {
+                            let arch = document.querySelector('#stage2N .' + this.response.arch);
+                            if (arch === null)
+                            {
+                                arch = document.querySelector('#stage2N .noarch');
+                            }
+                            arch.style.display='inherit';
+                        }
                     case 'C':
                         document.querySelector('#stage2C .cdroms').innerHTML='Loading CDs...';
                         ajax.open('GET', '/cgi-bin/find-cdrom.sh');
